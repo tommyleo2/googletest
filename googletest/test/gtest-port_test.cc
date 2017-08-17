@@ -1209,7 +1209,7 @@ class DestructorTracker {
       : index_(GetNewIndex()) {}
   ~DestructorTracker() {
     // We never access DestructorCall::List() concurrently, so we don't need
-    // to protect this acccess with a mutex.
+    // to protect this access with a mutex.
     DestructorCall::List()[index_]->ReportDestroyed();
   }
 
@@ -1295,7 +1295,7 @@ TEST(WindowsTypesTest, HANDLEIsVoidStar) {
   StaticAssertTypeEq<HANDLE, void*>();
 }
 
-#if GTEST_OS_WINDOWS_MINGW
+#if GTEST_OS_WINDOWS_MINGW && !defined(__MINGW64_VERSION_MAJOR)
 TEST(WindowsTypesTest, _CRITICAL_SECTIONIs_CRITICAL_SECTION) {
   StaticAssertTypeEq<CRITICAL_SECTION, _CRITICAL_SECTION>();
 }
